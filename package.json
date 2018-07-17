@@ -12,11 +12,14 @@
     "coverage": "exit 0"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^7.1.0",
     "typescript": "^2.8.4"
   },
   "dependencies": {
-
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "machinomy": "^1.11.1"
   }
 }
