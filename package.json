@@ -1,0 +1,22 @@
+{
+  "name": "authority",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Authority package for Machinomy ExtraLight client",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "yarn build && node src/index.js",
+    "tslint": "tslint --format stylish --project . --exclude './node_modules/**/*.ts'",
+    "test": "exit 0",
+    "coverage": "exit 0"
+  },
+  "devDependencies": {
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^7.1.0",
+    "typescript": "^2.8.4"
+  },
+  "dependencies": {
+
+  }
+}
