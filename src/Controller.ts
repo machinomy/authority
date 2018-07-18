@@ -31,7 +31,7 @@ export default class Controller {
     this.middleware = router.routes()
     this.allowedMethods = router.allowedMethods()
     if (databaseURL.startsWith('sqlite://') !== true) {
-      log.error('Authority requires valid sqlite3 database URL in .env file or as env variable. Check out example.env file.')
+      log.error('Authority requires valid sqlite3 database URL in .env file or as env variable. Refer example.env file.')
       this.database = {} as sqlite3.Database
     } else {
       const dbPath = databaseURL.substring('sqlite://'.length, databaseURL.length)
