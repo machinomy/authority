@@ -3,8 +3,9 @@
 ## Get started
 
 1. Create .env file with settings (see [example.env](https://github.com/machinomy/authority/blob/master/example.env)).
-2. Apply DB-migrations via `yarn migrate` (database file will be created automatically).
-3. Run Authority via `yarn start` or `yarn debug` (if you want to see debug information). 
+2. Install dependencies via `yarn`.
+3. Apply DB-migrations via `yarn migrate` (database file will be created automatically or you can use existing one).
+4. Run Authority via `yarn start` or `yarn debug` (if you want to see debug information). 
 
 ## Settings file (.env file)
 

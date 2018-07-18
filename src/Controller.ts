@@ -75,7 +75,7 @@ export default class Controller {
     log.info('Recovered ethereumAddress: ' + ethereumAddress)
     try {
       await this.sqlRun(
-        'INSERT INTO el_node(ethereumAddress, enode) VALUES ($ethereumAddress, $nodeId)',
+        'INSERT INTO el_node(ethereumAddress, nodeId) VALUES ($ethereumAddress, $nodeId)',
         {
           $ethereumAddress: ethereumAddress,
           $nodeId: nodeId

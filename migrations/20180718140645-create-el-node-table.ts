@@ -8,7 +8,7 @@ exports.up = (db: any, callback: CallbackFunction) => {
   const createTableOptions = {
     columns:
     {
-      ethereum_address: {
+      ethereumAddress: {
         type: 'string',
         primaryKey: true
       },
