@@ -19,18 +19,22 @@ export default class Controller {
   async addBCNode (ctx: Router.IRouterContext) {
     const body = ctx.request.body
     console.log('ADD BC: This is a body: ' + JSON.stringify(body))
+    ctx.status = 200
   }
 
   async addELNode (ctx: Router.IRouterContext) {
     const body = ctx.request.body
     console.log('ADD EL: This is a body: ' + JSON.stringify(body))
+    ctx.status = 200
   }
 
   async getBCNodes (ctx: Router.IRouterContext) {
     console.log('GET BC NODES! ')
+    ctx.status = 200
   }
 
   async getELNodes (ctx: Router.IRouterContext) {
     console.log('GET EL NODES! ')
+    ctx.status = 200
   }
 }

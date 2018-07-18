@@ -7,8 +7,8 @@ export default class Routes {
 
   constructor (controller: Controller) {
     const router = new Router()
-    router.use('/', controller.middleware)
-    router.use('/', controller.allowedMethods)
+    router.use('', controller.middleware)
+    router.use('', controller.allowedMethods)
 
     this.middleware = router.middleware()
     this.allowedMethods = router.allowedMethods()
