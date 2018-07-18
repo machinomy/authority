@@ -2,6 +2,7 @@ import Logger from '@machinomy/logger'
 import * as Router from 'koa-router'
 import { Middleware } from 'koa'
 import * as sqlite3 from 'sqlite3'
+import * as ethUtil from 'ethereumjs-util'
 
 const log = new Logger('authority:controller')
 
@@ -12,7 +13,7 @@ interface AddBCNodeRequest {
 }
 
 interface AddELNodeRequest {
-  ethereumAddress: string
+  signature: string
   nodeId: string
 }
 
@@ -39,7 +40,7 @@ export default class Controller {
     }
   }
 
-  async addBCNode (ctx: Router.IRouterContext) {
+  async addBCNode (ctx: Router.IRouterContext): Promise<void> {
     const body = ctx.request.body! as AddBCNodeRequest
     log.info('ADD BC: This is a body: ' + JSON.stringify(body))
     // tslint:disable-next-line:no-unnecessary-type-assertion
@@ -63,13 +64,15 @@ export default class Controller {
     }
   }
 
-  async addELNode (ctx: Router.IRouterContext) {
+  async addELNode (ctx: Router.IRouterContext): Promise<void> {
     const body = ctx.request.body as AddELNodeRequest
     log.info('ADD EL: This is a body: ' + JSON.stringify(body))
     // tslint:disable-next-line:no-unnecessary-type-assertion
-    const ethereumAddress = body!.ethereumAddress
-    // tslint:disable-next-line:no-unnecessary-type-assertion
     const nodeId = body!.nodeId
+    // tslint:disable-next-line:no-unnecessary-type-assertion
+    const signature = body!.signature
+    const ethereumAddress = this.recoverEthereumAddress(nodeId, signature)
+    log.info('Recovered ethereumAddress: ' + ethereumAddress)
     try {
       await this.sqlRun(
         'INSERT INTO el_node(ethereumAddress, enode) VALUES ($ethereumAddress, $nodeId)',
@@ -84,7 +87,7 @@ export default class Controller {
     }
   }
 
-  async getBCNodes (ctx: Router.IRouterContext) {
+  async getBCNodes (ctx: Router.IRouterContext): Promise<void> {
     log.info('GET BC NODES! ')
     try {
       const bcNodes = await this.sqlAll('SELECT name, enode, networkId FROM bc_node')
@@ -97,7 +100,7 @@ export default class Controller {
     }
   }
 
-  async getELNodes (ctx: Router.IRouterContext) {
+  async getELNodes (ctx: Router.IRouterContext): Promise<void> {
     log.info('GET EL NODES! ')
     try {
       const elNodes = await this.sqlAll('SELECT ethereumAddress, nodeId FROM el_node')
@@ -124,5 +127,17 @@ export default class Controller {
         error ? reject(error) : resolve(rows)
       })
     })
+  }
+
+  recoverEthereumAddress (message: string, signature: string): string {
+    const ETH_PREAMBLE = '\x19Ethereum Signed Message:\n'
+    const hash = ethUtil.sha3(message)
+    const buffer = ethUtil.toBuffer(hash)
+    const prefix = Buffer.from(ETH_PREAMBLE)
+    const msg = ethUtil.sha3(Buffer.concat([prefix, Buffer.from(String(buffer.length)), buffer]))
+    const sig = ethUtil.fromRpcSig(signature)
+    const publicKey = ethUtil.ecrecover(msg, sig.v, sig.r, sig.s)
+    const recoveredAddress = ethUtil.pubToAddress(publicKey)
+    return ethUtil.bufferToHex(recoveredAddress)
   }
 }
