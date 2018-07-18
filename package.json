@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "start": "yarn build && node bin/authority.js",
+    "debug": "yarn build && DEBUG=* node bin/authority.js",
     "migrate": "tsc --moduleResolution node --lib es6 --target es5 ./migrations/*.ts && db-migrate up",
     "lint": "tslint --format stylish --project . --exclude './node_modules/**/*.ts'",
     "test": "exit 0",

@@ -7,14 +7,14 @@ let _meta: Object = {
 exports.up = (db: any, callback: CallbackFunction) => {
   const createTableOptions = {
     columns:
-      {
-        name: 'string',
-        enode: {
-          type: 'string',
-          primaryKey: true
-        },
-        networkId: 'string'
+    {
+      name: 'string',
+      enode: {
+        type: 'string',
+        primaryKey: true
       },
+      networkId: 'string'
+    },
     ifNotExists: true
   }
   db.createTable('bc_node', createTableOptions, callback)

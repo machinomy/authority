@@ -1,4 +1,3 @@
-import * as pg from 'pg'
 import Configuration from './Configuration'
 import Registry from './Registry'
 import Logger from '@machinomy/logger'
@@ -18,17 +17,9 @@ export default class Authority {
   }
 
   async start (): Promise<void> {
-    await this.ensureDatabaseConnected()
     const endpoint = await this.registry.httpEndpoint()
     const running = endpoint.listen()
     log.info('start authority')
     return running
-  }
-
-  async ensureDatabaseConnected () {
-    const client = new pg.Client({ connectionString: this.registry.configuration.databaseUrl })
-    return client.connect().catch(() => {
-      throw Error(`Database is not available via URL "${this.registry.configuration.databaseUrl}"!`)
-    })
   }
 }

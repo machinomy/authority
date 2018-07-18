@@ -17,7 +17,8 @@ export default class Registry {
 
   @memoize
   async controller (): Promise<Controller> {
-    return new Controller()
+    const databaseURL = this.configuration.databaseUrl
+    return new Controller(databaseURL)
   }
 
   @memoize

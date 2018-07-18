@@ -7,13 +7,13 @@ let _meta: Object = {
 exports.up = (db: any, callback: CallbackFunction) => {
   const createTableOptions = {
     columns:
-      {
-        ethereum_address: {
-          type: 'string',
-          primaryKey: true
-        },
-        nodeId: 'string'
+    {
+      ethereum_address: {
+        type: 'string',
+        primaryKey: true
       },
+      nodeId: 'string'
+    },
     ifNotExists: true
   }
   db.createTable('el_node', createTableOptions, callback)
