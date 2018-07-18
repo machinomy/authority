@@ -8,7 +8,10 @@ async function main () {
   return authority.start()
 }
 
-main().catch(error => {
+main().then(() => {
+  console.info('*** AUTHORITY IS RUNNING ***')
+}).catch((error: Error) => {
   console.error(error)
+  console.info('*** AUTHORITY WAS TERMINATED ***')
   process.exit(1)
 })
