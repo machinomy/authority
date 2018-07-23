@@ -11,7 +11,7 @@ export namespace Configuration {
 
     return {
       port: process.env.PORT || '5500',
-      databaseUrl: process.env.DATABASE_URL || 'postgres://localhost@authority'
+      databaseUrl: process.env.DATABASE_URL || 'sqlite://authorityDB.sqlite3'
     }
   }
 }

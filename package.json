@@ -4,6 +4,9 @@
   "private": true,
   "description": "Authority package for Machinomy ExtraLight client",
   "license": "Apache-2.0",
+  "bin": {
+    "authority": "./bin/authority.js"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "start": "yarn build && node bin/authority.js",
@@ -38,6 +41,7 @@
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "sqlite3": "^4.0.2"
+    "sqlite3": "^4.0.2",
+    "web3": "^0.20.6"
   }
 }

@@ -3,7 +3,8 @@ import * as Router from 'koa-router'
 import { Middleware } from 'koa'
 import * as sqlite3 from 'sqlite3'
 import * as ethUtil from 'ethereumjs-util'
-
+const Web3 = require('web3')
+const web3 = new Web3()
 const log = new Logger('authority:controller')
 
 interface AddBCNodeRequest {
@@ -68,7 +69,9 @@ export default class Controller {
     const body = ctx.request.body as AddELNodeRequest
     log.info('ADD EL: This is a body: ' + JSON.stringify(body))
     // tslint:disable-next-line:no-unnecessary-type-assertion
-    const nodeId = body!.nodeId
+    const nodeIdHex = body!.nodeId
+    const nodeId = web3.toAscii(nodeIdHex)
+    log.info('decoded nodeId: ' + nodeId)
     // tslint:disable-next-line:no-unnecessary-type-assertion
     const signature = body!.signature
     const ethereumAddress = this.recoverEthereumAddress(nodeId, signature)
